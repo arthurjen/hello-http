@@ -41,7 +41,7 @@ and include the text: `CANNOT <METHOD> <path>`
 in a `server.js` file at the root of your project. You will import (`require`) this same function into your E2E test
 and use `chai.request(app)` to start the server
 * Use 'extract' function to not have all of your code live in the listening function. You should be able to do this
-for 1) greeting, 2) interesting fact, 3) other BONUS methods. TDD these synchronous functions first before 
+for 1) birthday greeting, 2) interesting fact, 3) other BONUS methods. TDD these synchronous functions first before 
 exposing via the server.
 
 ## Testing
