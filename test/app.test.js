@@ -22,4 +22,12 @@ describe('http server', () => {
                 assert.equal(res.text, '<p>Happy birthday, <strong>Stranger!</strong> </p>');
             });
     });
+
+    it('returns a random fact that has "http" in it', () => {
+        return chai.request(app)
+            .get('/fact')
+            .then(res => {
+                assert.include(res.body.fact, 'http');
+            });
+    });
 });
