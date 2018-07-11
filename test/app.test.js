@@ -5,6 +5,15 @@ chai.use(chaiHttp);
 const app = require('../lib/app');
 
 describe('http server', () => {
+
+    it('greeting when no path', () => {
+        return chai.request(app)
+            .get('')
+            .then(res => {
+                assert.equal(res.text, '<h1>H E L L O <br> W O R L D</h1>');
+            });
+    });
+
     it('responds with happy birthday', () => {
         return chai.request(app)
             .get('/happy-birthday/Seymour?custom=You%20ROCK')
@@ -31,11 +40,33 @@ describe('http server', () => {
             });
     });
 
-    it('returns a list of 25 words', () => {
+    it('returns a list of 25 random words', () => {
         return chai.request(app)
             .get('/codenames')
             .then(res => {
-                assert.equal(res.body.set.length, 25);
+                const words = res.body.set;
+                assert.equal(words.length, 25);
+                words.forEach(w => assert.isString(w));
+            });
+    });
+
+    it('capitalizes the first letter of each word provided', () => {
+        return chai.request(app)
+            .post('/caps')
+            .set('Content-Type', 'application/json')
+            .send(['capitalize these words please'])
+            .then(res => {
+                // assert.equal(res.status, 200);
+                assert.deepEqual(res.body, { caps: 'Capitalize These Words Please' });
+            });
+    });
+
+    it('returns 404 error', () => {
+        return chai.request(app)
+            .get('/food')
+            .then(res => {
+                assert.equal(res.status, 404);
+                assert.equal(res.text, 'CANNOT GET /food');
             });
     });
 });
