@@ -35,7 +35,7 @@ describe('http server', () => {
         return chai.request(app)
             .get('/codenames')
             .then(res => {
-                assert.equal(res.body.words.length, 25);
+                assert.equal(res.body.set.length, 25);
             });
     });
 });
