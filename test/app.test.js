@@ -83,6 +83,17 @@ describe('http server', () => {
             });
     });
 
+    it('capitalizes the last letter when option=last', () => {
+        return chai.request(app)
+            .post('/caps?option=last')
+            .set('Content-Type', 'application/json')
+            .send(['this is too much'])
+            .then(res => {
+                assert.equal(res.status, 200);
+                assert.deepEqual(res.body, { caps: 'thiS iS toO mucH' });
+            });
+    });
+
     it('returns 404 error', () => {
         return chai.request(app)
             .get('/food')
