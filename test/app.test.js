@@ -56,8 +56,30 @@ describe('http server', () => {
             .set('Content-Type', 'application/json')
             .send(['capitalize these words please'])
             .then(res => {
-                // assert.equal(res.status, 200);
+                assert.equal(res.status, 200);
                 assert.deepEqual(res.body, { caps: 'Capitalize These Words Please' });
+            });
+    });
+
+    it('capitalizes all the letters of the string if option=all', () => {
+        return chai.request(app)
+            .post('/caps?option=all')
+            .set('Content-Type', 'application/json')
+            .send(['zip zop zippadee doo!'])
+            .then(res => {
+                assert.equal(res.status, 200);
+                assert.deepEqual(res.body, { caps: 'ZIP ZOP ZIPPADEE DOO!' });
+            });
+    });
+
+    it('capitalizes the nth letter of the string when option=n', () => {
+        return chai.request(app)
+            .post('/caps?option=2')
+            .set('Content-Type', 'application/json')
+            .send(['i am the best worst player'])
+            .then(res => {
+                assert.equal(res.status, 200);
+                assert.deepEqual(res.body, { caps: 'i am thE beSt woRst plAyer' });
             });
     });
 
