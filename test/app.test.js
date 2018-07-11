@@ -27,7 +27,15 @@ describe('http server', () => {
         return chai.request(app)
             .get('/fact')
             .then(res => {
-                assert.include(res.body.fact, 'http');
+                assert.include(res.body.fact, 'HTTP');
+            });
+    });
+
+    it('returns a list of 25 words', () => {
+        return chai.request(app)
+            .get('/codenames')
+            .then(res => {
+                assert.equal(res.body.words.length, 25);
             });
     });
 });
